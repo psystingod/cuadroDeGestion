@@ -12,6 +12,7 @@
     <title>Generador de cuadros de gestión</title>
 </head>
 <body>
+<?php include 'dias.php'?>
     <nav>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Cablesat</a>
@@ -45,6 +46,15 @@
             <th>Jueves</th>
             <th>Viernes</th>
             <th>Sábado</th>
+            <?php
+                for ($i = 1; $i <= 5; $i++) {
+                    echo "<tr>";
+                    for ($j = 1; $j <= 7; $j++) {
+                        echo "<td height='150' width='150'></td>";
+                    }
+                    echo "</tr>";
+                }
+            ?>
         </table>
     </div>
 </body>
