@@ -29,8 +29,19 @@
                 </div>
                 <div class="form-group col-md-4">
                     <select id="meses" class="form-control">
-                        <option selected>Elegir un mes...</option>
-                        <option>...</option>
+                        <option selected disabled>Elegir un mes...</option>
+                        <option>Enero</option>
+                        <option>Febrero</option>
+                        <option>Marzo</option>
+                        <option>Abril</option>
+                        <option>Mayo</option>
+                        <option>Junio</option>
+                        <option>Julio</option>
+                        <option>Agosto</option>
+                        <option>Septiembre</option>
+                        <option>Octubre</option>
+                        <option>Noviembre</option>
+                        <option>Diciembre</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
@@ -39,18 +50,18 @@
             </div>
         </form>
         <table class="table table-bordered">
-            <th>Domingo</th>
-            <th>Lunes</th>
-            <th>Martes</th>
-            <th>Miercoles</th>
-            <th>Jueves</th>
-            <th>Viernes</th>
-            <th>Sábado</th>
+            <th class="border border-secondary">Domingo</th>
+            <th class="border border-secondary">Lunes</th>
+            <th class="border border-secondary">Martes</th>
+            <th class="border border-secondary">Miercoles</th>
+            <th class="border border-secondary">Jueves</th>
+            <th class="border border-secondary">Viernes</th>
+            <th class="border border-secondary">Sábado</th>
             <?php
                 for ($i = 1; $i <= 5; $i++) {
                     echo "<tr>";
                     for ($j = 1; $j <= 7; $j++) {
-                        echo "<td height='150' width='150'></td>";
+                        echo "<td class='border border-secondary' height='150' width='150'></td>";
                     }
                     echo "</tr>";
                 }
