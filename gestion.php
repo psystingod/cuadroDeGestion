@@ -12,61 +12,83 @@
     <title>Generador de cuadros de gestión</title>
 </head>
 <body>
-<?php include 'dias.php'?>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Cablesat</a>
-        </div>
-    </nav>
+
     <div class="container-fluid">
-        <br>
-        <h2 class="text-center">Generador de cuadros de gestión</h2>
-        <br>
-        <form action="">
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    
-                </div>
-                <div class="form-group col-md-4">
-                    <select id="meses" class="form-control">
-                        <option selected disabled>Elegir un mes...</option>
-                        <option>Enero</option>
-                        <option>Febrero</option>
-                        <option>Marzo</option>
-                        <option>Abril</option>
-                        <option>Mayo</option>
-                        <option>Junio</option>
-                        <option>Julio</option>
-                        <option>Agosto</option>
-                        <option>Septiembre</option>
-                        <option>Octubre</option>
-                        <option>Noviembre</option>
-                        <option>Diciembre</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <input type="submit" class="btn btn-info" value="Generar">
-                </div>
-            </div>
-        </form>
-        <table class="table table-bordered">
-            <th class="border border-secondary">Domingo</th>
-            <th class="border border-secondary">Lunes</th>
-            <th class="border border-secondary">Martes</th>
-            <th class="border border-secondary">Miercoles</th>
-            <th class="border border-secondary">Jueves</th>
-            <th class="border border-secondary">Viernes</th>
-            <th class="border border-secondary">Sábado</th>
-            <?php
-                for ($i = 1; $i <= 5; $i++) {
-                    echo "<tr>";
-                    for ($j = 1; $j <= 7; $j++) {
-                        echo "<td class='border border-secondary' height='150' width='150'></td>";
-                    }
-                    echo "</tr>";
-                }
-            ?>
-        </table>
+
+        <?php
+     function build_calendar($month,$year) {
+     // Create array containing abbreviations of days of week.
+     $daysOfWeek = array('Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
+     // What is the first day of the month in question?
+     $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
+     // How many days does this month contain?
+     $numberDays = date('t',$firstDayOfMonth);
+     // Retrieve some information about the first day of the
+     // month in question.
+     $dateComponents = getdate($firstDayOfMonth);
+     // What is the name of the month in question?
+     $monthName = $dateComponents['month'];
+     // What is the index value (0-6) of the first day of the
+     // month in question.
+     $dayOfWeek = $dateComponents['wday'];
+     // Create the table tag opener and day headers
+     $calendar = "<table class='calendar table-bordered'>";
+     //$calendar .= "<caption>$monthName $year</caption>";
+     $calendar .= "<tr>";
+     // Create the calendar headers
+     foreach($daysOfWeek as $day) {
+          $calendar .= "<th class='header border-secondary'>$day</th>";
+     } 
+     // Create the rest of the calendar
+     // Initiate the day counter, starting with the 1st.
+     $currentDay = 1;
+     $calendar .= "</tr><tr>";
+     // The variable $dayOfWeek is used to
+     // ensure that the calendar
+     // display consists of exactly 7 columns.
+     if ($dayOfWeek > 0) { 
+          $calendar .= "<td class='border border-secondary' colspan='$dayOfWeek' height='150' width='150'>&nbsp;</td>"; 
+     }
+     
+     $month = str_pad($month, 2, "0", STR_PAD_LEFT);
+  
+     while ($currentDay <= $numberDays) {
+          // Seventh column (Saturday) reached. Start a new row.
+          if ($dayOfWeek == 7) {
+               $dayOfWeek = 0;
+               $calendar .= "</tr><tr>";
+          }
+          
+          $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
+          
+          $date = "$year-$month-$currentDayRel";
+          $calendar .= "<td class='day border-secondary' rel='$date'height='150' width='150'>$currentDay</td>";
+          // Increment counters
+ 
+          $currentDay++;
+          $dayOfWeek++;
+     }
+     
+     
+     // Complete the row of the last week in month, if necessary
+     if ($dayOfWeek != 7) { 
+     
+          $remainingDays = 7 - $dayOfWeek;
+          $calendar .= "<td class='border border-secondary' colspan='$remainingDays'>&nbsp;</td>"; 
+     }
+     
+     $calendar .= "</tr>";
+     $calendar .= "</table>";
+     return $calendar;
+}
+?>
+
+<?php
+     $dateComponents = getdate();
+     $month = $dateComponents['mon'];                  
+     $year = $dateComponents['year'];
+     echo build_calendar($month,$year);
+?>
     </div>
 </body>
 </html>
